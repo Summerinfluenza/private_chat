@@ -1,7 +1,6 @@
 # app.py
 from flask import Flask, render_template, request
 from chat import chat
-import asyncio
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
