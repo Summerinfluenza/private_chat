@@ -17,7 +17,7 @@ async def generate_image(userinput):
     try:
         # Send asynchronous request to OpenAI API
         response = await client.images.generate(
-            model="dall-e-2",
+            model="dall-e-3",
             prompt=userinput,
             size="1024x1024",
             quality="standard",
