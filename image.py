@@ -1,36 +1,32 @@
-import json
+from openai import OpenAI, AsyncOpenAI
+import os
+from dotenv import load_dotenv
 import aiohttp
 
-url = "https://stablediffusionapi.com/api/v3/text2img"
-headers = {
-  'Content-Type': 'application/json'
-}
+# Load environment variables from .env file
+load_dotenv()
 
-async def generate_image(userprompt):
-    payload = json.dumps({
-    "key": "",
-    "prompt": userprompt,
-    "negative_prompt": None,
-    "width": "512",
-    "height": "512",
-    "samples": "1",
-    "num_inference_steps": "20",
-    "seed": None,
-    "guidance_scale": 7.5,
-    "safety_checker": "yes",
-    "multi_lingual": "no",
-    "panorama": "no",
-    "self_attention": "no",
-    "upscale": "no",
-    "embeddings_model": None,
-    "webhook": None,
-    "track_id": None
-    })
+# Initialize OpenAI client with your API key
+client = AsyncOpenAI(
+  organization=os.getenv("OPENAI_ORGANIZATION_ID"),
+  project=os.getenv("Default project"),
+  api_key=os.getenv('OPENAI_API_KEY')
+)
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, data=payload) as response:
-            response_text = await response.text()
-            print(response_text)
+async def generate_image(userinput):
+    try:
+        # Send asynchronous request to OpenAI API
+        response = await client.images.generate(
+            model="dall-e-2",
+            prompt=userinput,
+            size="1024x1024",
+            quality="standard",
+            n=1,
+        )
 
-    return response.text
-
+        # Extract image URL from response
+        image_url = response.data[0].url
+        return image_url
+    except Exception as e:
+        print(f"Error generating image: {e}")
+        return None
