@@ -18,8 +18,11 @@ pip install -r requirements.txt
 You need to create an account at OPENAI and retrieve the following information:
 
 OPENAI_API_KEY="YOUR API KEY"
+
 OPENAI_ORGANIZATION_NAME="YOUR ORGANIZATION NAME"
+
 OPENAI_ORGANIZATION_ID="YOUR ORGANIZATION ID"
+
 OPENAI_PROJECT="YOUR PROJECT NAME"
 
 
