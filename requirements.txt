@@ -2,3 +2,4 @@ aiohttp
 flask[async]
 openai
 python-dotenv
+gunicorn
